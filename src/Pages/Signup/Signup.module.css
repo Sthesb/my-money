@@ -17,3 +17,6 @@
   color: #777;
   width: 100%;
 }
+.signup-form p {
+  color: red;
+}
