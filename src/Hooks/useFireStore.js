@@ -1,5 +1,5 @@
 import { useReducer, useEffect, useState } from "react";
-import { projectFirestore } from "../Firebase/Config";
+import { projectFirestore, timestamp } from "../Firebase/Config";
 
 let initialState = {
     document: null,
@@ -10,7 +10,12 @@ let initialState = {
 
 const firestoreReducer = (state, action) => {
     switch(action.type){
-        
+        case 'IS_PENDING':
+            return { isPending: true, document: null, success: false, error: null }
+        case 'ADDED_DOCUMENT':
+            return {isPending: false, document: action.payload, success: true, error: null }
+        case 'ERROR':
+            return {isPending: false, document: null, success: false, error: action.payload }
         default:
             return state
     }
@@ -22,9 +27,24 @@ export const useFireStore = (collection) => {
     
     // collection reference
     const reference = projectFirestore.collection(collection);
-    // add document
-    const addDocument = (formData) => {
 
+    // only dispatch if not cancelled 
+    const dispatchIfNotCancelled = (action) => {
+        if(!isCancelled){
+            dispatch(action)
+        }
+    }
+
+    // add document
+    const addDocument = async(doc) => {
+        dispatch({ type: 'IS_PENDING' })
+        try{
+            const createdAt = timestamp.fromDate(new Date())
+            const addedDocumnet = await reference.add({...doc, createdAt})
+            dispatchIfNotCancelled({ type: 'ADDED_DOCUMENT', payload: addedDocumnet })
+        }catch (err) {
+            dispatchIfNotCancelled({ type: 'ERROR', payload: err.message })
+        }
     }
 
     // delete document
