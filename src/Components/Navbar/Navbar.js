@@ -10,7 +10,6 @@ import { useAuthContext } from '../../Hooks/useAuthContext';
 export default function Navbar() {
   const { logout } = useAuthLogout()
   const { user } = useAuthContext();
-
   return (
       <nav className={styles.navbar}>
         <ul>
@@ -23,6 +22,7 @@ export default function Navbar() {
           )}
           {user && (
             <>
+              <li>{ user.displayName }</li>
               <li><button className="btn" onClick={logout}>Logout</button></li>
             </>
           )}
