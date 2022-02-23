@@ -3,14 +3,12 @@ import {  useEffect, useState } from "react";
 // context
 import { useAuthContext } from "./useAuthContext";
 import { projectAuth } from "../Firebase/Config";
-import { useHistory } from "react-router-dom";
 
 export const useAuthLogin = () => {
     const [isCancelled, setIsCancelled] = useState(false);
     const [error, setError] = useState(null)
     const [isPending, setIsPending] = useState(false);
     const { dispatch } = useAuthContext()
-    const history = useHistory();
     
 
     const login = async(email, password) => {
@@ -25,7 +23,6 @@ export const useAuthLogin = () => {
             if(!isCancelled){
                 setIsPending(false)
                 setError(null)
-                history.push('/')
             }
             
 

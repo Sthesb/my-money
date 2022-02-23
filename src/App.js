@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 
 
 // Pages
@@ -13,7 +13,7 @@ import { useAuthContext } from './Hooks/useAuthContext';
 
 
 function App() {
-  const { authIsReady } = useAuthContext();
+  const { authIsReady, user } = useAuthContext();
 
   return (
     <div className="App">
@@ -21,9 +21,19 @@ function App() {
         <BrowserRouter>
           <Navbar />
           <Switch>
-            <Route path="/" exact><Home /></Route>
-            <Route path="/login" exact><Login /></Route>
-            <Route path="/signup" exact><Signup/></Route>
+            <Route path="/" exact>
+              { !user && <Redirect to="/login" /> }
+              { user && <Home /> }
+            </Route>
+            <Route path="/login" exact>
+              { !user && <Login /> }
+              { user && <Redirect to="/" /> }
+            </Route>
+            <Route path="/signup" exact>
+              { !user && <Signup /> }
+              { user && <Redirect to="/" /> }
+            </Route>
+              
           </Switch>
         </BrowserRouter>
       )}

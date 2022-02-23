@@ -22,7 +22,7 @@ export default function Navbar() {
           )}
           {user && (
             <>
-              <li>{ user.displayName }</li>
+              <li>Hello { user.displayName }!</li>
               <li><button className="btn" onClick={logout}>Logout</button></li>
             </>
           )}
