@@ -12,7 +12,7 @@ export default function Home() {
   const { user } = useAuthContext()
   const { document , error} = useCollection(
     'transactions', 
-    ['uid', '==', user.uid], 
+    ['uid', '==', user.uid],
     ['createdAt', 'desc']
     )
 
