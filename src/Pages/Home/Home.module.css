@@ -7,6 +7,9 @@
 .content {
   padding-right: 30px;
 }
+.content h2 {
+  color: #1f9751;
+}
 .sidebar {
   padding-left: 30px;
 }
@@ -56,6 +59,15 @@
 }
 
 /* transactions */
+.transactions {
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll;
+  height: 400px;
+}
+.transactions::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
 .transactions li {
   margin: 30px auto;
   border: 1px solid #f2f2f2;
@@ -90,4 +102,16 @@
   line-height: 0;
   font-size: 0.9em;
   cursor: pointer;
+}
+
+/* media */
+
+@media only screen and (max-width: 600px) {
+  /*Big smartphones [426px -> 600px]*/
+  .container {
+    display: block;
+  }
+}
+@media only screen and (max-width: 425px) {
+  /*Small smartphones [325px -> 425px]*/
 }
